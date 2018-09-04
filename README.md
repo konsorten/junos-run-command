@@ -1,4 +1,4 @@
-# Run commands Juniper SRX firewall
+# Run commands on Juniper SRX firewall
 
 This tools is designed to run a Kubernetes Cron Job and run multiple commands on the Juniper SRX firewall.
 
