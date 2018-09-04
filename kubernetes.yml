@@ -1,0 +1,28 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: junos-pppoe-disconnect
+  namespace: juniper-support
+spec:
+  schedule: "3 5 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: junos-pppoe-disconnect
+            image: kontainer.store/networking/junos-run-command:a001
+            imagePullPolicy: Always
+            env:
+              - name: JUNIPER_HOST
+                value: "192.168.208.1"
+              - name: JUNIPER_USER
+                value: "run-command"
+              - name: JUNIPER_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: junos-run-command
+                    key: juniper-password
+              - name: JUNIPER_COMMAND
+                value: "request pppoe disconnect pp0.0"
